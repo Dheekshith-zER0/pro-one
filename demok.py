@@ -73,8 +73,8 @@ def get_translation_data():
             "keyword_detected": "🚩 संदिग्ध कीवर्ड पाया गया: इस यूआरएल में 'login' या 'bank' जैसे संवेदनशील शब्द हैं।",
             "tld_detected": "🚩 संदिग्ध शीर्ष-स्तरीय डोमेन पाया गया:",
             "heuristics_warning": "⚠ इस यूआरएल को हमारे सरल नियमों द्वारा चिह्नित किया गया है। सावधानी से आगे बढ़ें।",
-            "url_safe": "✅ यह यूआरएल सुरक्षित प्रतीत होता ہے!",
-            "url_suspicious": "🚨 यह यूआरएल संदिग्ध है - संभवतः फ़िशिंग!",
+            "url_safe": "✅ यह यूआरएल सुरक्षित प्रतीत होता है!",
+            "url_suspicious": "🚨 यह यूआरएल संदिग्ध है - संभवतः फ़িশिंग!",
             "sender_not_found": "नहीं मिला",
             "sender_placeholder": "नहीं मिला",
             "welcome_title": "फ़िशिंग और यूआरएल चेकर में आपका स्वागत है", 
@@ -108,7 +108,7 @@ def get_translation_data():
             "url_input": "URL నమోదు చేయండి",
             "url_placeholder": "ఉదా: https://login.bankofamerica.com.xyz",
             "check_button": "URL తనిఖీ చేయండి",
-            "url_warning": "దయచేసి తనిఖీ చేయడానికి ఒక URL నమోదు చేయండి.",
+            "url_warning": "దయచేసి తనిఖీ చేయడానికి ఒక URL నమోదు చేయండి।",
             "keyword_detected": "🚩 అనుమానాస్పద కీవర్డ్ గుర్తించబడింది: ఈ URLలో 'login' లేదా 'bank' వంటి సున్నితమైన పదం ఉంది.",
             "tld_detected": "🚩 అనుమానాస్పద టాప్-లెవల్ డొమైన్ గుర్తించబడింది:",
             "heuristics_warning": "⚠ ఈ URL మా ప్రాథమిక హ్యూరిస్టిక్స్ ద్వారా ఫ్లాగ్ చేయబడింది. జాగ్రత్తగా కొనసాగండి.",
@@ -312,28 +312,39 @@ def set_custom_theme():
                 color: black !important;
             }
             
+            /* FIX 1: TOP HEADER AND GIT TOOLS */
+            /* Aggressively target the header bar for light background */
+            header {
+                background-color: #f0f2f6 !important; /* Sets the top bar to match the light sidebar */
+            }
+            /* Ensure the text/icons in the header (like Share/Deploy) are dark */
+            header .st-emotion-cache-1ghh0na > div > div, 
+            header .st-emotion-cache-1ghh0na svg {
+                color: #262730 !important;
+                fill: #262730 !important;
+            }
+
             /* TARGETING SIDEBAR AREA */
             .stSidebar {
                 background-color: #f0f2f6 !important; 
             }
             
-            /* FIX: Ensure sidebar text/labels are dark in light mode */
+            /* FIX 2: SIDEBAR COLLAPSE ARROW */
+            /* Targeting the specific button and the SVG icon within the sidebar header */
+            .stSidebarHeader button svg, .stSidebarHeader button .st-emotion-cache-13sbsf2 {
+                fill: #262730 !important; /* Force the collapse icon to be dark */
+                color: #262730 !important;
+            }
+
+            /* FIX 3: Ensure sidebar text/labels are dark in light mode */
             .stSidebar h1, .stSidebar h2, .stSidebar h3, .stSidebar h4, .stSidebar .stMarkdown, .stSidebar label {
                 color: #262730 !important; /* Dark color for contrast */
             }
-            /* FIX: Ensure radio buttons and selectbox text is readable in light sidebar */
-            .stSidebar .stRadio div, .stSidebar .stSelectbox > div {
+            /* Ensure radio buttons and selectbox text is readable in light sidebar */
+            .stSidebar .stRadio div, .stSidebar .stSelectbox > div, .stSidebar .stSelectbox > div div {
                 color: #262730 !important; 
             }
-            /* FIX: Targeting the top black menu/header bar (Class may change) */
-            header {
-                background-color: #f0f2f6 !important; /* Sets the top bar to match the light sidebar */
-            }
-            /* **NEW FIX:** Targeting the sidebar collapse arrow (double arrow icon) */
-            .stSidebar .stButton button svg {
-                fill: #262730 !important; /* Force the icon to be dark in light mode */
-            }
-            
+
             /* TARGETING MAIN CONTENT TEXT */
             h1, h2, h3, h4, .stMarkdown, .stText, .stTextInput > div > label, .stTextArea > div > label, .stSelectbox > label {
                 color: #262730 !important;
@@ -351,14 +362,22 @@ def set_custom_theme():
             .stSidebar {
                 background-color: #1A1D23 !important;
             }
-            /* Ensure the top header is dark */
+            /* Ensure the top header and tools are dark */
             header {
                 background-color: #0E1117 !important;
             }
-            /* Ensure the sidebar collapse arrow is light in dark mode */
-            .stSidebar .stButton button svg {
-                fill: #FAFAFA !important; 
+            header .st-emotion-cache-1ghh0na > div > div, 
+            header .st-emotion-cache-1ghh0na svg {
+                color: #FAFAFA !important;
+                fill: #FAFAFA !important;
             }
+            
+            /* Ensure the sidebar collapse arrow is light in dark mode */
+            .stSidebarHeader button svg, .stSidebarHeader button .st-emotion-cache-13sbsf2 {
+                fill: #FAFAFA !important; 
+                color: #FAFAFA !important;
+            }
+
             h1, h2, h3, h4, .stMarkdown, .stText, .stButton > button, .stTextInput > div > label, .stTextArea > div > label, .stSelectbox > label {
                 color: #FAFAFA !important;
             }
