@@ -43,9 +43,9 @@ def get_translation_data():
             "select_lang": "Please select your preferred language to continue:", 
             "confirm_lang": "Continue to App", 
             "nav_title": "Navigation", 
-            "theme_title": "Theme", # New translation key
-            "light_mode": "Light Mode 💡", # New translation key
-            "dark_mode": "Dark Mode 🌙", # New translation key
+            "theme_title": "Theme",
+            "light_mode": "Light Mode 💡",
+            "dark_mode": "Dark Mode 🌙",
         },
         "hi": {  # Hindi
             "page_title": "फ़िशिंग और यूआरएल चेकर",
@@ -77,13 +77,13 @@ def get_translation_data():
             "url_suspicious": "🚨 यह यूआरएल संदिग्ध है - संभवतः फ़िशिंग!",
             "sender_not_found": "नहीं मिला",
             "sender_placeholder": "नहीं मिला",
-            "welcome_title": "फ़िशिंग और यूआरएल चेकर में आपका स्वागत है", 
-            "select_lang": "जारी रखने के लिए कृपया अपनी पसंदीदा भाषा चुनें:", 
-            "confirm_lang": "ऐप पर जारी रखें", 
+            "welcome_title": "फ़िशिंग और यूआरएल चेकर میں خوش آمدید", 
+            "select_lang": "जारी रखने کے لیے कृपया اپنی पसंदीदा भाषा चुनें:", 
+            "confirm_lang": "ऐप پر جاری رکھیں", 
             "nav_title": "नेविगेशन",
-            "theme_title": "थीम", # New translation key
-            "light_mode": "लाइट मोड 💡", # New translation key
-            "dark_mode": "डार्क मोड 🌙", # New translation key
+            "theme_title": "थीम",
+            "light_mode": "लाइट मोड 💡",
+            "dark_mode": "डार्क मोड 🌙",
         },
 
         "te": {
@@ -120,9 +120,9 @@ def get_translation_data():
             "select_lang": "దయచేసి కొనసాగడానికి మీకు ఇష్టమైన భాషను ఎంచుకోండి:",
             "confirm_lang": "యాప్ కొనసాగించండి",
             "nav_title": "నావిగేషన్",
-            "theme_title": "థీమ్", # New translation key
-            "light_mode": "లైట్ మోడ్ 💡", # New translation key
-            "dark_mode": "డార్క్ మోడ్ 🌙", # New translation key
+            "theme_title": "థీమ్",
+            "light_mode": "లైట్ మోడ్ 💡",
+            "dark_mode": "డార్క్ మోడ్ 🌙",
         }, 
         "bn": {
             "page_title": "ফিশিং ও ইউআরএল চেকার",
@@ -158,9 +158,9 @@ def get_translation_data():
             "select_lang": "চালিয়ে যেতে আপনার পছন্দের ভাষা নির্বাচন করুন:",
             "confirm_lang": "অ্যাপে চালিয়ে যান",
             "nav_title": "ন্যাভিগেশন",
-            "theme_title": "থিম", # New translation key
-            "light_mode": "লাইট মোড 💡", # New translation key
-            "dark_mode": "ডার্ক মোড 🌙", # New translation key
+            "theme_title": "থিম",
+            "light_mode": "লাইট মোড 💡",
+            "dark_mode": "ডার্ক মোড 🌙",
         }, 
         "ur": {
             "page_title": "فشنگ اور یو آر ایل چیکر",
@@ -196,9 +196,9 @@ def get_translation_data():
             "select_lang": "جاری رکھنے کے لیے اپنی پسندیدہ زبان منتخب کریں:",
             "confirm_lang": "ایپ پر جاری رکھیں",
             "nav_title": "نیویگیشن",
-            "theme_title": "تھیم", # New translation key
-            "light_mode": "لائٹ موڈ 💡", # New translation key
-            "dark_mode": "ڈارک موڈ 🌙", # New translation key
+            "theme_title": "تھیم",
+            "light_mode": "لائٹ موڈ 💡",
+            "dark_mode": "ڈارک موڈ 🌙",
         }, 
     }
 
@@ -215,7 +215,8 @@ def get_translation_data():
     if 'lang_code' not in st.session_state:
         st.session_state.lang_code = None 
     if 'theme' not in st.session_state: # Initialize theme
-        st.session_state.theme = 'dark' # Default theme
+        # Default theme for the first run should be dark for better compatibility
+        st.session_state.theme = 'dark' 
         
     # Get translation dictionary (t)
     lang_code = st.session_state.lang_code if st.session_state.lang_code else 'en'
@@ -245,7 +246,7 @@ def analyze_email(content, t_dict):
 # --- App UI Functions ---
 
 def email_checker(t):
-    st.title(f"{t['email_title']}")
+    st.title(f"🔍 {t['email_title']}")
     st.markdown(t["email_desc"])
     
     email_content = st.text_area(t["email_input"], placeholder=t["email_placeholder"], height=200)
@@ -273,7 +274,7 @@ def email_checker(t):
     st.markdown(t["footer"])
     
 def url_checker(t):
-    st.title(f" {t['url_title']}")
+    st.title(f"🌐 {t['url_title']}")
     st.markdown(t["url_desc"])
     
     url_input = st.text_input(t["url_input"], placeholder=t["url_placeholder"])
@@ -300,47 +301,45 @@ def url_checker(t):
 
 # --- Theme CSS Injection ---
 def set_custom_theme():
-    """Injects custom CSS based on the theme selected in session_state."""
+    """Injects custom CSS based on the theme selected in session_state.
+       Uses a simple custom theme to override Streamlit's defaults."""
+    
+    # Base CSS variables for Streamlit (can sometimes override external injection)
+    # We will rely on direct CSS class overriding for simplicity.
+
     if st.session_state.theme == 'light':
-        # Custom Light Theme (Overrides Streamlit's default dark mode if it was selected)
-        # Using a simple light theme by setting the main background and text colors
         css = """
         <style>
+            /* Light Theme */
             .stApp {
-                background-color: white; 
-                color: black;
+                background-color: white !important; 
+                color: black !important;
             }
-            /* Adjust sidebar for light mode if needed */
             .stSidebar {
-                background-color: #f0f2f6; 
+                background-color: #f0f2f6 !important; 
             }
-            /* Adjust headers for better contrast */
-            h1, h2, h3, h4 {
-                color: #262730;
+            h1, h2, h3, h4, .stMarkdown, .stText, .stButton > button, .stTextInput > div > label, .stTextArea > div > label, .stSelectbox > label {
+                color: #262730 !important;
             }
         </style>
         """
-        st.markdown(css, unsafe_allow_html=True)
     elif st.session_state.theme == 'dark':
-        # Custom Dark Theme (Uses Streamlit's default dark mode colors as a base, 
-        # but you can override specific elements if needed)
-        # In the absence of a direct Streamlit theme toggle, 
-        # using a general dark mode style is the only way to ensure consistency.
         css = """
         <style>
+            /* Dark Theme (Streamlit default look) */
             .stApp {
-                background-color: #0E1117;
-                color: white;
+                background-color: #0E1117 !important;
+                color: #FAFAFA !important;
             }
             .stSidebar {
-                background-color: #1A1D23;
+                background-color: #1A1D23 !important;
             }
-            h1, h2, h3, h4 {
-                color: #FAFAFA;
+            h1, h2, h3, h4, .stMarkdown, .stText, .stButton > button, .stTextInput > div > label, .stTextArea > div > label, .stSelectbox > label {
+                color: #FAFAFA !important;
             }
         </style>
         """
-        st.markdown(css, unsafe_allow_html=True)
+    st.markdown(css, unsafe_allow_html=True)
         
 def toggle_theme():
     """Switches the theme between light and dark."""
@@ -354,17 +353,18 @@ def toggle_theme():
 
 t, lang_map, translations_all = get_translation_data()
 
-# Inject the custom theme CSS BEFORE any other Streamlit component
-set_custom_theme()
-
-# Page configuration
+# 1. PAGE CONFIG MUST BE THE FIRST STREAMLIT CALL
 st.set_page_config(
     page_title=t["page_title"],
     page_icon="🔍",
     layout="wide"
 )
 
-# 1. LANDING PAGE: FORCE LANGUAGE SELECTION
+# 2. Inject the custom theme CSS AFTER page config and BEFORE any other component
+# This allows the CSS to run on every script rerun based on the session state change
+set_custom_theme()
+
+# 3. LANDING PAGE: FORCE LANGUAGE SELECTION
 if st.session_state.lang_code is None:
     # Center the content using columns
     col_l, col_c, col_r = st.columns([1, 2, 1])
@@ -374,7 +374,7 @@ if st.session_state.lang_code is None:
         st.title(translations_all["en"]["welcome_title"])
         st.markdown("---")
         
-        st.subheader(" Please select your language / कृपया अपनी भाषा चुनें:")
+        st.subheader(f"🌐 {translations_all['en']['select_lang']}") # Use English key for initial instruction
         
         # Selectbox for the initial choice
         selected_lang_name = st.selectbox(
@@ -397,7 +397,7 @@ if st.session_state.lang_code is None:
             pass
 
 else:
-    # 2. MAIN APP: LANGUAGE AND THEME IS SET
+    # 4. MAIN APP: LANGUAGE AND THEME IS SET
     
     # --- Sidebar Theme Switcher ---
     st.sidebar.title(t["nav_title"])
@@ -431,7 +431,7 @@ else:
     
     # Language Switcher
     st.sidebar.selectbox(
-        " Language / ভাষা",
+        t["select_lang"], # Use the translated label
         list(lang_map.keys()),
         index=current_lang_index,
         key='sidebar_language_select',
@@ -441,10 +441,11 @@ else:
     st.sidebar.markdown("---")
     
     # Navigation Radio Buttons
-    page = st.sidebar.radio("Go to", [t["email_checker"], t["url_checker"]])
+    page = st.sidebar.radio(t["nav_title"], [t["email_checker"], t["url_checker"]])
 
     # --- Content Area ---
     if page == t["email_checker"]:
         email_checker(t)
     else:
         url_checker(t)
+    
