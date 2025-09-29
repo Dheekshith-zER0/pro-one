@@ -73,13 +73,13 @@ def get_translation_data():
             "keyword_detected": "🚩 संदिग्ध कीवर्ड पाया गया: इस यूआरएल में 'login' या 'bank' जैसे संवेदनशील शब्द हैं।",
             "tld_detected": "🚩 संदिग्ध शीर्ष-स्तरीय डोमेन पाया गया:",
             "heuristics_warning": "⚠ इस यूआरएल को हमारे सरल नियमों द्वारा चिह्नित किया गया है। सावधानी से आगे बढ़ें।",
-            "url_safe": "✅ यह यूआरएल सुरक्षित प्रतीत होता है!",
+            "url_safe": "✅ यह यूआरएल सुरक्षित प्रतीत होता ہے!",
             "url_suspicious": "🚨 यह यूआरएल संदिग्ध है - संभवतः फ़िशिंग!",
             "sender_not_found": "नहीं मिला",
             "sender_placeholder": "नहीं मिला",
-            "welcome_title": "फ़िशिंग और यूआरएल चेकर میں خوش آمدید", 
-            "select_lang": "जारी रखने کے لیے कृपया اپنی पसंदीदा भाषा चुनें:", 
-            "confirm_lang": "ऐप پر جاری رکھیں", 
+            "welcome_title": "फ़िशिंग और यूआरएल चेकर में आपका स्वागत है", 
+            "select_lang": "जारी रखने के लिए कृपया अपनी पसंदीदा भाषा चुनें:", 
+            "confirm_lang": "ऐप पर जारी रखें", 
             "nav_title": "नेविगेशन",
             "theme_title": "थीम",
             "light_mode": "लाइट मोड 💡",
@@ -158,7 +158,7 @@ def get_translation_data():
             "select_lang": "চালিয়ে যেতে আপনার পছন্দের ভাষা নির্বাচন করুন:",
             "confirm_lang": "অ্যাপে চালিয়ে যান",
             "nav_title": "ন্যাভিগেশন",
-            "theme_title": "থিম",
+            "theme_title": "থীম",
             "light_mode": "লাইট মোড 💡",
             "dark_mode": "ডার্ক মোড 🌙",
         }, 
@@ -301,24 +301,36 @@ def url_checker(t):
 
 # --- Theme CSS Injection ---
 def set_custom_theme():
-    """Injects custom CSS based on the theme selected in session_state.
-       Uses a simple custom theme to override Streamlit's defaults."""
+    """Injects custom CSS based on the theme selected in session_state."""
     
-    # Base CSS variables for Streamlit (can sometimes override external injection)
-    # We will rely on direct CSS class overriding for simplicity.
-
     if st.session_state.theme == 'light':
         css = """
         <style>
-            /* Light Theme */
+            /* TARGETING MAIN APP AREA */
             .stApp {
                 background-color: white !important; 
                 color: black !important;
             }
+            
+            /* TARGETING SIDEBAR AREA */
             .stSidebar {
                 background-color: #f0f2f6 !important; 
             }
-            h1, h2, h3, h4, .stMarkdown, .stText, .stButton > button, .stTextInput > div > label, .stTextArea > div > label, .stSelectbox > label {
+            /* FIX: Ensure sidebar text/labels are dark in light mode */
+            .stSidebar h1, .stSidebar h2, .stSidebar h3, .stSidebar h4, .stSidebar .stMarkdown, .stSidebar label {
+                color: #262730 !important; /* Dark color for contrast */
+            }
+            /* FIX: Ensure radio buttons and selectbox text is readable in light sidebar */
+            .stSidebar .stRadio div, .stSidebar .stSelectbox > div {
+                color: #262730 !important; 
+            }
+            /* FIX: Targeting the top black menu/header bar */
+            header.css-158w94w { /* This class is often used for the header/menu bar */
+                background-color: #f0f2f6 !important; /* Match sidebar background */
+            }
+            
+            /* TARGETING MAIN CONTENT TEXT */
+            h1, h2, h3, h4, .stMarkdown, .stText, .stTextInput > div > label, .stTextArea > div > label, .stSelectbox > label {
                 color: #262730 !important;
             }
         </style>
@@ -326,13 +338,17 @@ def set_custom_theme():
     elif st.session_state.theme == 'dark':
         css = """
         <style>
-            /* Dark Theme (Streamlit default look) */
+            /* Dark Theme (Using Streamlit's default dark colors) */
             .stApp {
                 background-color: #0E1117 !important;
                 color: #FAFAFA !important;
             }
             .stSidebar {
                 background-color: #1A1D23 !important;
+            }
+            /* Ensure the top header is dark */
+            header.css-158w94w {
+                background-color: #0E1117 !important;
             }
             h1, h2, h3, h4, .stMarkdown, .stText, .stButton > button, .stTextInput > div > label, .stTextArea > div > label, .stSelectbox > label {
                 color: #FAFAFA !important;
@@ -360,8 +376,7 @@ st.set_page_config(
     layout="wide"
 )
 
-# 2. Inject the custom theme CSS AFTER page config and BEFORE any other component
-# This allows the CSS to run on every script rerun based on the session state change
+# 2. Inject the custom theme CSS AFTER page config
 set_custom_theme()
 
 # 3. LANDING PAGE: FORCE LANGUAGE SELECTION
@@ -448,4 +463,3 @@ else:
         email_checker(t)
     else:
         url_checker(t)
-    
