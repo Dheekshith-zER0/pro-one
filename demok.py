@@ -246,7 +246,7 @@ def analyze_email(content, t_dict):
 # --- App UI Functions ---
 
 def email_checker(t):
-    st.title(f"🔍 {t['email_title']}")
+    st.title(f"{t['email_title']}")
     st.markdown(t["email_desc"])
     
     email_content = st.text_area(t["email_input"], placeholder=t["email_placeholder"], height=200)
@@ -274,7 +274,7 @@ def email_checker(t):
     st.markdown(t["footer"])
     
 def url_checker(t):
-    st.title(f"🌐 {t['url_title']}")
+    st.title(f"{t['url_title']}")
     st.markdown(t["url_desc"])
     
     url_input = st.text_input(t["url_input"], placeholder=t["url_placeholder"])
@@ -389,7 +389,7 @@ if st.session_state.lang_code is None:
         st.title(translations_all["en"]["welcome_title"])
         st.markdown("---")
         
-        st.subheader(f"🌐 {translations_all['en']['select_lang']}") # Use English key for initial instruction
+        st.subheader(f"{translations_all['en']['select_lang']}") # Use English key for initial instruction
         
         # Selectbox for the initial choice
         selected_lang_name = st.selectbox(
@@ -463,3 +463,4 @@ else:
         email_checker(t)
     else:
         url_checker(t)
+
