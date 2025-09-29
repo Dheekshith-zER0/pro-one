@@ -316,6 +316,7 @@ def set_custom_theme():
             .stSidebar {
                 background-color: #f0f2f6 !important; 
             }
+            
             /* FIX: Ensure sidebar text/labels are dark in light mode */
             .stSidebar h1, .stSidebar h2, .stSidebar h3, .stSidebar h4, .stSidebar .stMarkdown, .stSidebar label {
                 color: #262730 !important; /* Dark color for contrast */
@@ -324,9 +325,13 @@ def set_custom_theme():
             .stSidebar .stRadio div, .stSidebar .stSelectbox > div {
                 color: #262730 !important; 
             }
-            /* FIX: Targeting the top black menu/header bar */
-            header.css-158w94w { /* This class is often used for the header/menu bar */
-                background-color: #f0f2f6 !important; /* Match sidebar background */
+            /* FIX: Targeting the top black menu/header bar (Class may change) */
+            header {
+                background-color: #f0f2f6 !important; /* Sets the top bar to match the light sidebar */
+            }
+            /* **NEW FIX:** Targeting the sidebar collapse arrow (double arrow icon) */
+            .stSidebar .stButton button svg {
+                fill: #262730 !important; /* Force the icon to be dark in light mode */
             }
             
             /* TARGETING MAIN CONTENT TEXT */
@@ -347,8 +352,12 @@ def set_custom_theme():
                 background-color: #1A1D23 !important;
             }
             /* Ensure the top header is dark */
-            header.css-158w94w {
+            header {
                 background-color: #0E1117 !important;
+            }
+            /* Ensure the sidebar collapse arrow is light in dark mode */
+            .stSidebar .stButton button svg {
+                fill: #FAFAFA !important; 
             }
             h1, h2, h3, h4, .stMarkdown, .stText, .stButton > button, .stTextInput > div > label, .stTextArea > div > label, .stSelectbox > label {
                 color: #FAFAFA !important;
