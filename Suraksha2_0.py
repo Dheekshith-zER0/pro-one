@@ -121,3 +121,4 @@ if st.sidebar.button("Start Obfuscation"):
 # Footer for prototype feel
 st.markdown("---")
 st.write("This is a generic prototype. Obfuscation is simulated for demonstration.")
+
